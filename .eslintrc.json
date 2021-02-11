@@ -19,6 +19,6 @@
     "@typescript-eslint/no-unused-vars": [
       "off"
     ],
-    "cyclomatic-complexity": [true, 7]
+    "cyclomatic-complexity": "error"
   }
 }

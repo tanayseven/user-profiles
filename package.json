@@ -24,6 +24,7 @@
     "lint-staged": "^10.5.4",
     "msw": "^0.26.2",
     "npm-run-all": "^4.1.5",
+    "prettier": "^2.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
@@ -37,6 +38,9 @@
     "test": "react-scripts test",
     "lint": "eslint './**/*.{js,ts,tsx}'",
     "lint:fix": "eslint './**/*.{js,ts,tsx}' --fix",
+    "test-mutation": "stryker run",
+    "test-ui": "npm-run-all -p -r start test-ui-without-server",
+    "test-ui-without-server": "cypress run --browser chromium",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -66,5 +70,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "devDependencies": {}
 }
