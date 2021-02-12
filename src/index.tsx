@@ -3,6 +3,14 @@ import ReactDOM from 'react-dom'
 import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+import { setupWorker } from 'msw'
+import { handlers } from './handlers'
+
+if (process.env.NODE_ENV === 'development') {
+  navigator.serviceWorker.register('./mockServiceWorker.js')
+  const worker = setupWorker(...handlers)
+  worker.start()
+}
 
 ReactDOM.render(
   <React.StrictMode>
