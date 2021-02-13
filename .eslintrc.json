@@ -5,6 +5,11 @@
     "@typescript-eslint"
   ],
   "parser": "@typescript-eslint/parser",
+  "ignorePatterns": [
+    "node_modules",
+    "cypress",
+    "reports"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",

@@ -1,6 +1,16 @@
-import { UsersRequest } from './usersRequest'
+import { UserResponse, UsersResponse } from './usersResponse'
+import { rest } from 'msw'
 
-export const handlers = []
+export const handlers = [
+  rest.get<UserResponse, string, UserRequestParams>('/user-list/:number', (req, res, ctx) => {
+    const { number } = req.params
+    return res(ctx.json(usersResponses.slice(0, parseInt(number)) as UsersResponse))
+  }),
+]
+
+interface UserRequestParams {
+  number: string
+}
 
 const usersResponses = [
   {
@@ -5603,4 +5613,4 @@ const usersResponses = [
     },
     nat: 'IE',
   },
-] as UsersRequest
+] as UsersResponse

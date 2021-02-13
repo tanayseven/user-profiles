@@ -1,5 +1,5 @@
-type UsersRequest = UserRequest[]
-interface UserRequest {
+type UsersResponse = UserResponse[]
+interface UserResponse {
   gender: string
   name: Name
   location: Location
@@ -71,4 +71,4 @@ interface Name {
   last: string
 }
 
-export type { UsersRequest, UserRequest }
+export type { UsersResponse, UserResponse }
