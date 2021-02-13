@@ -2,14 +2,30 @@ import { UserResponse, UsersResponse } from './usersResponse'
 import { rest } from 'msw'
 
 export const handlers = [
-  rest.get<UserResponse, string, UserRequestParams>('/user-list/:number', (req, res, ctx) => {
-    const { number } = req.params
-    return res(ctx.json(usersResponses.slice(0, parseInt(number)) as UsersResponse))
+  rest.get<UserResponse, string, UserListRequestParams>('/api/user-list/:number/:page', (req, res, ctx) => {
+    const { number, page } = req.params
+    return res(
+      ctx.json(
+        usersResponses.slice(
+          parseInt(number) * (parseInt(page) - 1),
+          parseInt(number) * parseInt(page),
+        ) as UsersResponse,
+      ),
+    )
+  }),
+  rest.get<UserResponse, string, UserRequestParams>('/api/user-list/:index', (req, res, ctx) => {
+    const { index } = req.params
+    return res(ctx.json(usersResponses[parseInt(index)]))
   }),
 ]
 
-interface UserRequestParams {
+interface UserListRequestParams {
   number: string
+  page: string
+}
+
+interface UserRequestParams {
+  index: string
 }
 
 const usersResponses = [

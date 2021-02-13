@@ -20,8 +20,10 @@
   "rules": {
     "prettier/prettier": "error",
     "@typescript-eslint/no-explicit-any": "error",
+    "react/prop-types": "off",
+    "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
-      "off"
+      "error", {"varsIgnorePattern": "__.+"}
     ],
     "complexity": ["error", 7]
   }
