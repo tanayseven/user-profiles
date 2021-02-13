@@ -1,4 +1,4 @@
-type UsersRequest = Array<UsersRequest>
+type UsersRequest = UserRequest[]
 interface UserRequest {
   gender: string
   name: Name
