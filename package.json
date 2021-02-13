@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.3",
     "@stryker-mutator/core": "^4.4.1",
     "@stryker-mutator/jest-runner": "^4.4.1",
     "@testing-library/jest-dom": "^5.11.9",
