@@ -1,5 +1,5 @@
 import React from 'react'
-import { MemoryRouter, Router } from 'react-router'
+import { Router } from 'react-router'
 import { Login } from './login'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { createBrowserHistory } from 'history'
