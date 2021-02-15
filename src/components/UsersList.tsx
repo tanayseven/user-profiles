@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { UsersResponse } from './usersResponse'
+import { UsersResponse } from '../types/UsersResponse'
+import { ComponentState } from '../types/ComponentState'
 import { Link } from 'react-router-dom'
 
-type ComponentState = 'loading' | 'loaded' | 'errored'
+interface Props {
+  page: number
+  setPage: (page: number) => void
+  updateCurrentUser: (e: React.MouseEvent<HTMLAnchorElement>) => void
+}
 
-export const UsersList: React.FC = () => {
+export const UsersList: React.FC<Props> = ({ page, setPage, updateCurrentUser }) => {
   const numberOfUsersPerPage = 5
   const [users, setUsers] = useState<UsersResponse>([])
-  const [page, setPage] = useState<number>(1)
-  const [componentState, setComponentState] = useState<ComponentState>('loading')
+  const [componentState, setComponentState] = useState<ComponentState>(ComponentState.LOADING)
   const [errorMessage, setErrorMessage] = useState<string>('')
 
   function fetchUsers() {
@@ -16,12 +20,12 @@ export const UsersList: React.FC = () => {
       .then((response) =>
         response.json().then((json: UsersResponse) => {
           setUsers(json)
-          setComponentState('loaded')
+          setComponentState(ComponentState.LOADED)
         }),
       )
       .catch((error) => {
         setErrorMessage(`Error fetching data from the server: ${error}`)
-        setComponentState('errored')
+        setComponentState(ComponentState.ERROR)
       })
   }
 
@@ -29,9 +33,9 @@ export const UsersList: React.FC = () => {
     fetchUsers()
   }, [users])
 
-  if (componentState === 'loading') return <p>Loading...</p>
+  if (componentState === ComponentState.LOADING) return <p>Loading...</p>
 
-  if (componentState === 'errored') return <p>{errorMessage}</p>
+  if (componentState === ComponentState.ERROR) return <p>{errorMessage}</p>
 
   return (
     <div>
@@ -70,7 +74,9 @@ export const UsersList: React.FC = () => {
             <p>
               Last Name: <span>{user.name.last}</span>
             </p>
-            <Link to={`/user-profile/${index}`}>View/Edit full profile</Link>
+            <Link to={`/user-profile/${index}`} rel={`${index}`} onClick={updateCurrentUser}>
+              View/Edit full profile
+            </Link>
           </li>
         ))}
       </ul>
