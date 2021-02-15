@@ -31,7 +31,7 @@ export const UsersList: React.FC = () => {
 
   useEffect(() => {
     fetchUsers()
-  }, [])
+  }, [pageNum])
 
   if (componentState === 'loading') return <p>Loading...</p>
 
