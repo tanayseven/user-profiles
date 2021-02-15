@@ -4,8 +4,14 @@ import { UsersList } from './UsersList'
 import { MemoryRouter } from 'react-router'
 
 it('should be initially in login state', () => {
+  const setPage = () => {
+    console.log('Page')
+  }
+  const updateCurrentUser = () => {
+    console.log('No action needed')
+  }
   // given
-  render(<UsersList />)
+  render(<UsersList page={1} setPage={setPage} updateCurrentUser={updateCurrentUser} />)
 
   const loadingMessage = screen.getByText('Loading...')
 
@@ -14,9 +20,15 @@ it('should be initially in login state', () => {
 
 it('should successfully load first five users', async () => {
   //given
+  const setPage = () => {
+    console.log('Page')
+  }
+  const updateCurrentUser = () => {
+    console.log('No action needed')
+  }
   render(
     <MemoryRouter>
-      <UsersList />
+      <UsersList page={1} setPage={setPage} updateCurrentUser={updateCurrentUser} />
     </MemoryRouter>,
   )
 
@@ -45,15 +57,30 @@ it('should successfully load first five users', async () => {
 
 it('should successfully load next five users on click of next page', async () => {
   // given
+  let page = 1
+  const setPage = () => {
+    page = 2
+  }
+  const updateCurrentUser = () => {
+    console.log('No action needed')
+  }
+
   render(
     <MemoryRouter>
-      <UsersList />
+      <UsersList page={page} setPage={setPage} updateCurrentUser={updateCurrentUser} />
     </MemoryRouter>,
   )
   const nextPageButton = await screen.findByText(/Next Page/)
 
   // when
   fireEvent.click(nextPageButton)
+
+  // re-render the same component with updated props
+  render(
+    <MemoryRouter>
+      <UsersList page={page} setPage={setPage} updateCurrentUser={updateCurrentUser} />
+    </MemoryRouter>,
+  )
 
   // then
   const usersFirstNames = [
