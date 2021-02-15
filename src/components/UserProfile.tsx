@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const UserProfile: React.FC<Props> = ({ index, history }) => {
-  const [componentState, setComponentState] = useState<ComponentState>(ComponentState.LOADING)
+  const [componentState, setComponentState] = useState<ComponentState>('loading')
   const [errorMessage, setErrorMessage] = useState<string>('')
   const [user, setUser] = useState<UserResponse>()
 
@@ -19,12 +19,12 @@ export const UserProfile: React.FC<Props> = ({ index, history }) => {
       .then((response) =>
         response.json().then((json: UserResponse) => {
           setUser(json)
-          setComponentState(ComponentState.LOADED)
+          setComponentState('loaded')
         }),
       )
       .catch((error) => {
         setErrorMessage(`Error fetching data from ther server: ${error}`)
-        setComponentState(ComponentState.ERROR)
+        setComponentState('error')
       })
   }
 
@@ -32,9 +32,9 @@ export const UserProfile: React.FC<Props> = ({ index, history }) => {
     fetchUser()
   }, [])
 
-  if (componentState === ComponentState.LOADING) return <p>Loading...</p>
+  if (componentState === 'loading') return <p>Loading...</p>
 
-  if (componentState === ComponentState.ERROR) return <p>{errorMessage}</p>
+  if (componentState === 'error') return <p>{errorMessage}</p>
 
   if (!user) return <p>Could not load user</p>
 

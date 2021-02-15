@@ -12,7 +12,7 @@ interface Props {
 export const UsersList: React.FC<Props> = ({ page, setPage, updateCurrentUser }) => {
   const numberOfUsersPerPage = 5
   const [users, setUsers] = useState<UsersResponse>([])
-  const [componentState, setComponentState] = useState<ComponentState>(ComponentState.LOADING)
+  const [componentState, setComponentState] = useState<ComponentState>('loading')
   const [errorMessage, setErrorMessage] = useState<string>('')
 
   function fetchUsers() {
@@ -20,12 +20,12 @@ export const UsersList: React.FC<Props> = ({ page, setPage, updateCurrentUser })
       .then((response) =>
         response.json().then((json: UsersResponse) => {
           setUsers(json)
-          setComponentState(ComponentState.LOADED)
+          setComponentState('loaded')
         }),
       )
       .catch((error) => {
         setErrorMessage(`Error fetching data from the server: ${error}`)
-        setComponentState(ComponentState.ERROR)
+        setComponentState('error')
       })
   }
 
@@ -33,9 +33,9 @@ export const UsersList: React.FC<Props> = ({ page, setPage, updateCurrentUser })
     fetchUsers()
   }, [users])
 
-  if (componentState === ComponentState.LOADING) return <p>Loading...</p>
+  if (componentState === 'loading') return <p>Loading...</p>
 
-  if (componentState === ComponentState.ERROR) return <p>{errorMessage}</p>
+  if (componentState === 'error') return <p>{errorMessage}</p>
 
   return (
     <div>
