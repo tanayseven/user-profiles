@@ -8,7 +8,7 @@ const renderComponent = ({ pageNum, history }: { pageNum: string; history: Memor
   render(
     <MemoryRouter initialEntries={[`/users-list/${pageNum}`]}>
       <Route path="/users-list/:pageNum" history={history}>
-        <UsersList history={history} />
+        <UsersList />
       </Route>
     </MemoryRouter>,
   )
