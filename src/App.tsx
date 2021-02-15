@@ -20,9 +20,9 @@ const App: React.FC = () => {
               <Login />
             </Route>
             <Route path="/users-list/:pageNum">
-              <UsersList history={history} />
+              <UsersList />
             </Route>
-            <Route path="/user-profile/:userId">
+            <Route path="/user-profile/:userLoginUuid">
               <UserProfile history={history} />
             </Route>
           </Switch>

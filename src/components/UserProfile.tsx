@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { UserResponse, UUID } from '../types/UsersResponse'
 import { ComponentState } from '../types/ComponentState'
 import { Link, useParams } from 'react-router-dom'
-import { History } from 'history'
+import { BrowserHistory } from 'history'
 
 interface Props {
-  history: History
+  history: BrowserHistory
 }
 
 interface UrlParams {
@@ -19,7 +19,7 @@ export const UserProfile: React.FC<Props> = ({ history }) => {
   const [user, setUser] = useState<UserResponse>()
 
   function fetchUser() {
-    fetch(`/api/user-list/${userLoginUuid}`)
+    fetch(`/api/user-profile/${userLoginUuid}`)
       .then((response) =>
         response.json().then((json: UserResponse) => {
           setUser(json)
@@ -27,7 +27,7 @@ export const UserProfile: React.FC<Props> = ({ history }) => {
         }),
       )
       .catch((error) => {
-        setErrorMessage(`Error fetching data from ther server: ${error}`)
+        setErrorMessage(`Error fetching data from the server: ${error}`)
         setComponentState('error')
       })
   }

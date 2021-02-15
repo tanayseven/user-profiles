@@ -5,7 +5,7 @@ import { rest } from 'msw'
 import { usersResponses } from './__data__/mock'
 
 export const handlers = [
-  rest.get<UserResponse, string, UserListRequestParams>('/api/user-list/:number/:page', (req, res, ctx) => {
+  rest.get<UsersResponse, string, UserListRequestParams>('/api/user-list/:number/:page', (req, res, ctx) => {
     const { number, page } = req.params
     return res(
       ctx.json(
@@ -18,8 +18,8 @@ export const handlers = [
   }),
   rest.get<UserResponse, string, UserRequestParams>('/api/user-profile/:userUuid', (req, res, ctx) => {
     const { userUuid } = req.params
-    const matchedResponses = usersResponses.filter((user) => user.login.uuid === userUuid)
-    return res(ctx.json(matchedResponses[0]))
+    const matchedUser = usersResponses.find((user) => user.login.uuid === userUuid)
+    return res(ctx.json(matchedUser))
   }),
 ]
 
