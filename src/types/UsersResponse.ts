@@ -31,7 +31,7 @@ interface Dob {
 }
 
 interface Login {
-  uuid: string
+  uuid: UUID
   username: string
   password: string
   salt: string
@@ -72,3 +72,4 @@ interface Name {
 }
 
 export type { UsersResponse, UserResponse }
+export type UUID = string & { __brand: 'UUID' }

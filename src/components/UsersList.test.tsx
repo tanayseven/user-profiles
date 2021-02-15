@@ -1,36 +1,33 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
+import { MemoryRouter, Route } from 'react-router'
 import { UsersList } from './UsersList'
-import { MemoryRouter } from 'react-router'
+import { createMemoryHistory, MemoryHistory } from 'history'
 
-it('should be initially in login state', () => {
-  const setPage = () => {
-    console.log('Page')
-  }
-  const updateCurrentUser = () => {
-    console.log('No action needed')
-  }
+const renderComponent = ({ pageNum, history }: { pageNum: string; history: MemoryHistory }) =>
+  render(
+    <MemoryRouter initialEntries={[`/users-list/${pageNum}`]}>
+      <Route path="/users-list/:pageNum" history={history}>
+        <UsersList history={history} />
+      </Route>
+    </MemoryRouter>,
+  )
+
+it('should be initially in login state', async () => {
   // given
-  render(<UsersList page={1} setPage={setPage} updateCurrentUser={updateCurrentUser} />)
+  const history = createMemoryHistory()
+  renderComponent({ pageNum: '1', history })
 
   const loadingMessage = screen.getByText('Loading...')
 
   expect(loadingMessage).toBeInTheDocument()
+  await screen.findByText('User List')
 })
 
 it('should successfully load first five users', async () => {
   //given
-  const setPage = () => {
-    console.log('Page')
-  }
-  const updateCurrentUser = () => {
-    console.log('No action needed')
-  }
-  render(
-    <MemoryRouter>
-      <UsersList page={1} setPage={setPage} updateCurrentUser={updateCurrentUser} />
-    </MemoryRouter>,
-  )
+  const history = createMemoryHistory()
+  renderComponent({ pageNum: '1', history })
 
   // then
   const usersFirstNames = [
@@ -56,51 +53,14 @@ it('should successfully load first five users', async () => {
 })
 
 it('should successfully load next five users on click of next page', async () => {
-  // given
-  let page = 1
-  const setPage = () => {
-    page = 2
-  }
-  const updateCurrentUser = () => {
-    console.log('No action needed')
-  }
-
-  render(
-    <MemoryRouter>
-      <UsersList page={page} setPage={setPage} updateCurrentUser={updateCurrentUser} />
-    </MemoryRouter>,
-  )
+  //given
+  const history = createMemoryHistory()
+  history.replace('/users-list/1')
+  renderComponent({ pageNum: '1', history })
   const nextPageButton = await screen.findByText(/Next Page/)
 
   // when
   fireEvent.click(nextPageButton)
 
-  // re-render the same component with updated props
-  render(
-    <MemoryRouter>
-      <UsersList page={page} setPage={setPage} updateCurrentUser={updateCurrentUser} />
-    </MemoryRouter>,
-  )
-
-  // then
-  const usersFirstNames = [
-    await screen.findByText(/تارا/),
-    await screen.findByText(/Soan/),
-    await screen.findByText(/Leah/),
-    await screen.findByText(/Felicia/),
-    await screen.findByText(/Brielle/),
-  ]
-  const usersLastNames = [
-    await screen.findByText(/صدر/),
-    await screen.findByText(/Blanchard/),
-    await screen.findByText(/Singh/),
-    await screen.findByText(/Simmons/),
-    await screen.findByText(/Brown/),
-  ]
-  usersFirstNames.forEach((user) => {
-    expect(user).toBeInTheDocument()
-  })
-  usersLastNames.forEach((user) => {
-    expect(user).toBeInTheDocument()
-  })
+  expect(history.location.pathname).toEqual('/users-list/1')
 })

@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react'
-import { UserResponse } from '../types/UsersResponse'
+import { UserResponse, UUID } from '../types/UsersResponse'
 import { ComponentState } from '../types/ComponentState'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { History } from 'history'
 
 interface Props {
-  index: string
   history: History
 }
 
-export const UserProfile: React.FC<Props> = ({ index, history }) => {
+interface UrlParams {
+  userLoginUuid: UUID
+}
+
+export const UserProfile: React.FC<Props> = ({ history }) => {
   const [componentState, setComponentState] = useState<ComponentState>('loading')
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const { userLoginUuid } = useParams<UrlParams>()
   const [user, setUser] = useState<UserResponse>()
 
   function fetchUser() {
-    fetch(`/api/user-list/${index}`)
+    fetch(`/api/user-list/${userLoginUuid}`)
       .then((response) =>
         response.json().then((json: UserResponse) => {
           setUser(json)

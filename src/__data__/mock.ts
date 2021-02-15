@@ -1,3 +1,5 @@
+import { UsersResponse } from '../types/UsersResponse'
+
 export const usersResponses = [
   {
     gender: 'male',
@@ -5599,4 +5601,4 @@ export const usersResponses = [
     },
     nat: 'IE',
   },
-]
+] as UsersResponse

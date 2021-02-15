@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import { UsersResponse } from '../types/UsersResponse'
 import { ComponentState } from '../types/ComponentState'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
-interface Props {
-  page: number
-  setPage: (page: number) => void
-  updateCurrentUser: (e: React.MouseEvent<HTMLAnchorElement>) => void
+interface UrlParams {
+  pageNum: string
 }
 
-export const UsersList: React.FC<Props> = ({ page, setPage, updateCurrentUser }) => {
+export const UsersList: React.FC = () => {
   const numberOfUsersPerPage = 5
-  const [users, setUsers] = useState<UsersResponse>([])
+  const { pageNum } = useParams<UrlParams>()
+  const [firstPage, lastPage] = [1, 20]
   const [componentState, setComponentState] = useState<ComponentState>('loading')
+  const [users, setUsers] = useState<UsersResponse>([])
   const [errorMessage, setErrorMessage] = useState<string>('')
 
   function fetchUsers() {
-    fetch(`/api/user-list/${numberOfUsersPerPage}/${page}`)
+    fetch(`/api/user-list/${numberOfUsersPerPage}/${pageNum}`)
       .then((response) =>
         response.json().then((json: UsersResponse) => {
           setUsers(json)
@@ -40,27 +40,15 @@ export const UsersList: React.FC<Props> = ({ page, setPage, updateCurrentUser })
   return (
     <div>
       <h1>User List</h1>
-      <p>Page: {page}</p>
-      <input
-        type="button"
-        value="Previous Page"
-        onClick={() => {
-          if (page > 1) {
-            setPage(page - 1)
-            fetchUsers()
-          }
-        }}
-      />
-      <input
-        type="button"
-        value="Next Page"
-        onClick={() => {
-          if (page < 20) {
-            setPage(page + 1)
-            fetchUsers()
-          }
-        }}
-      />
+      <p>Page: {pageNum}</p>
+      {
+        <Link to={`/users-list/${+pageNum - 1}`} hidden={+pageNum === firstPage}>
+          Previous Page
+        </Link>
+      }
+      <Link to={`/users-list/${+pageNum + 1}`} hidden={+pageNum === lastPage}>
+        Next Page
+      </Link>
       <ul>
         {users.map((user, index) => (
           <li key={index}>
@@ -74,7 +62,7 @@ export const UsersList: React.FC<Props> = ({ page, setPage, updateCurrentUser })
             <p>
               Last Name: <span>{user.name.last}</span>
             </p>
-            <Link to={`/user-profile/${index}`} rel={`${index}`} onClick={updateCurrentUser}>
+            <Link to={`/user-profile/${user.login.uuid}`} rel={`${user.login.uuid}`}>
               View/Edit full profile
             </Link>
           </li>

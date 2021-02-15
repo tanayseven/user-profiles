@@ -24,7 +24,7 @@ it('should go to the users list screen with correct login credentials', () => {
 
   // then
   const currentLocation = history.location.pathname
-  expect(currentLocation).toEqual('/users-list')
+  expect(currentLocation).toEqual('/users-list/1')
   const errorMessage = screen.queryByText('Invalid username/password entered, please try again')
   expect(errorMessage).toBeFalsy()
 })

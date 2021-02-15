@@ -1,4 +1,4 @@
-import { UserResponse, UsersResponse } from './types/UsersResponse'
+import { UserResponse, UsersResponse, UUID } from './types/UsersResponse'
 import { rest } from 'msw'
 
 // Mock data from file
@@ -16,9 +16,10 @@ export const handlers = [
       ),
     )
   }),
-  rest.get<UserResponse, string, UserRequestParams>('/api/user-list/:index', (req, res, ctx) => {
-    const { index } = req.params
-    return res(ctx.json(usersResponses[parseInt(index)]))
+  rest.get<UserResponse, string, UserRequestParams>('/api/user-profile/:userUuid', (req, res, ctx) => {
+    const { userUuid } = req.params
+    const matchedResponses = usersResponses.filter((user) => user.login.uuid === userUuid)
+    return res(ctx.json(matchedResponses[0]))
   }),
 ]
 
@@ -28,5 +29,5 @@ interface UserListRequestParams {
 }
 
 interface UserRequestParams {
-  index: string
+  userUuid: UUID
 }

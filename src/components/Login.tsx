@@ -4,7 +4,7 @@ import { useHistory } from 'react-router'
 export const Login: React.FC = () => {
   const wrongLoginCredsMessage = 'Invalid username/password entered, please try again'
   const history = useHistory()
-  const userListPageLink = '/users-list'
+  const userList1stPageLink = '/users-list/1'
   const [errorMessage, setErrorMessage] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -33,7 +33,7 @@ export const Login: React.FC = () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         onClick={(__event): void => {
           if (username == 'admin' && password == 'admin') {
-            history.push(userListPageLink)
+            history.push(userList1stPageLink)
             return
           }
           setErrorMessage(wrongLoginCredsMessage)
