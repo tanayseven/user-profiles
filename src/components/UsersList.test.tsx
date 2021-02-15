@@ -18,10 +18,10 @@ it('should be initially in login state', async () => {
   const history = createMemoryHistory()
   renderComponent({ pageNum: '1', history })
 
-  const loadingMessage = screen.getByText('Loading...')
+  const loadingMessage = screen.getByText(/Loading.../)
 
   expect(loadingMessage).toBeInTheDocument()
-  await screen.findByText('User List')
+  await screen.findByText(/User List/)
 })
 
 it('should successfully load first five users', async () => {

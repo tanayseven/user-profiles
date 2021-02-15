@@ -18,10 +18,10 @@ it('should be initially in login state', async () => {
   const history = createMemoryHistory()
   renderComponent({ userLoginUuid: '6395346c-b109-49d9-8a62-7598802e00ef', history })
 
-  const loadingMessage = screen.getByText('Loading...')
+  const loadingMessage = screen.getByText(/Loading.../)
 
   expect(loadingMessage).toBeInTheDocument()
-  await screen.findByText('User profile')
+  await screen.findByText(/User profile/)
 })
 
 it('should display all editable fields when loaded', async () => {
