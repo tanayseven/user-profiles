@@ -1,5 +1,1 @@
-export enum ComponentState {
-  LOADING = 'loading',
-  LOADED = 'loaded',
-  ERROR = 'error',
-}
+export type ComponentState = 'loading' | 'loaded' | 'error'
