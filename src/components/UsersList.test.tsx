@@ -1,6 +1,6 @@
 import React from 'react'
 import { fireEvent, render, screen } from '@testing-library/react'
-import { UsersList } from './usersList'
+import { UsersList } from './UsersList'
 import { MemoryRouter } from 'react-router'
 
 it('should be initially in login state', () => {

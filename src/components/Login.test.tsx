@@ -1,6 +1,6 @@
 import React from 'react'
 import { Router } from 'react-router'
-import { Login } from './login'
+import { Login } from './Login'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { createBrowserHistory } from 'history'
 
