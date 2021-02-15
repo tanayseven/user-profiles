@@ -3,6 +3,7 @@ import { UserResponse, UUID } from '../types/UsersResponse'
 import { ComponentState } from '../types/ComponentState'
 import { Link, useParams } from 'react-router-dom'
 import { BrowserHistory } from 'history'
+import { EditableField } from './EditableFields'
 
 interface Props {
   history: BrowserHistory
@@ -52,15 +53,9 @@ export const UserProfile: React.FC<Props> = ({ history }) => {
         Back
       </button>
       <img src={user.picture.medium} alt="user-profile-picture" />
-      <p>
-        Title: {user.name.title} <input type="button" value="Edit" />
-      </p>
-      <p>
-        First Name: {user.name.first} <input type="button" value="Edit" />
-      </p>
-      <p>
-        Last Name: {user.name.last} <input type="button" value="Edit" />
-      </p>
+      <EditableField fieldName="Title" fieldValue={user.name.title} />
+      <EditableField fieldName="First Name" fieldValue={user.name.first} />
+      <EditableField fieldName="Last Name" fieldValue={user.name.last} />
       {/* TODO add more details of the user */}
     </>
   )
