@@ -3,6 +3,8 @@ import { UsersResponse } from '../types/UsersResponse'
 import { ComponentState } from '../types/ComponentState'
 import { Link, useParams } from 'react-router-dom'
 
+import { Wrapper, NavigationWrapper } from './UsersList.style'
+
 interface UrlParams {
   pageNum: string
 }
@@ -41,33 +43,40 @@ export const UsersList: React.FC = () => {
     <div>
       <h1>User List</h1>
       <p>Page: {pageNum}</p>
-      {
-        <Link to={`/users-list/${+pageNum - 1}`} hidden={+pageNum === firstPage}>
-          Previous Page
+      <NavigationWrapper>
+        {
+          <Link to={`/users-list/${+pageNum - 1}`} hidden={+pageNum === firstPage}>
+            Previous Page
+          </Link>
+        }
+        <Link to={`/users-list/${+pageNum + 1}`} hidden={+pageNum === lastPage}>
+          Next Page
         </Link>
-      }
-      <Link to={`/users-list/${+pageNum + 1}`} hidden={+pageNum === lastPage}>
-        Next Page
-      </Link>
-      <ul>
-        {users.map((user, index) => (
-          <li key={index}>
-            <img src={user.picture.thumbnail} alt="profile-picture" />
-            <p>
-              Title: <span>{user.name.title}</span>
-            </p>
-            <p>
-              First Name: <span>{user.name.first}</span>
-            </p>
-            <p>
-              Last Name: <span>{user.name.last}</span>
-            </p>
-            <Link to={`/user-profile/${user.login.uuid}`} rel={`${user.login.uuid}`}>
-              View/Edit full profile
-            </Link>
-          </li>
-        ))}
-      </ul>
+      </NavigationWrapper>
+      <Wrapper>
+        <ul className="list img-list">
+          {users.map((user, index) => (
+            <li key={index}>
+              <Link className="inner" to={`/user-profile/${user.login.uuid}`} rel={`${user.login.uuid}`}>
+                <div className="li-img">
+                  <img src={user.picture.thumbnail} alt="profile-picture" />
+                </div>
+                <div className="li-text">
+                  <h4 className="li-head">
+                    Title: <span>{user.name.title}</span>
+                  </h4>
+                  <p className="li-sub">
+                    First Name: <span>{user.name.first}</span>
+                  </p>
+                  <p className="li-sub">
+                    Last Name: <span>{user.name.last}</span>
+                  </p>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Wrapper>
     </div>
   )
 }
