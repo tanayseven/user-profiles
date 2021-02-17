@@ -9,7 +9,7 @@ it('should be successful with correct username and password', () => {
   cy.get('input[value=Login]')
     .click()
   cy.get('h1')
-    .contains('Users List')
+    .contains('User List')
 })
 
 // TODO complete the test below
