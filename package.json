@@ -45,7 +45,7 @@
     "lint:fix": "eslint './**/*.{js,ts,tsx}' --fix",
     "test-mutation": "stryker run",
     "test-ui": "npm-run-all -p -r start test-ui-without-server",
-    "test-ui-without-server": "cypress run --browser chromium",
+    "test-ui-without-server": "cypress run --browser chrome",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

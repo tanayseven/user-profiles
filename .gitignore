@@ -26,3 +26,5 @@ yarn-error.log*
 .stryker-tmp
 reports/
 .idea/
+cypress/screenshots/
+cypress/videos/
