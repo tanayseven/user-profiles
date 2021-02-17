@@ -8,11 +8,15 @@ import { Login } from './components/Login'
 import { UserProfile } from './components/UserProfile'
 import { UsersList } from './components/UsersList'
 
+// styles
+import { GlobalStyle } from './App.style'
+
 const App: React.FC = () => {
   const history = createBrowserHistory()
 
   return (
-    <div className="App">
+    <>
+      <GlobalStyle />
       <BrowserRouter>
         <div>
           <Switch>
@@ -28,7 +32,7 @@ const App: React.FC = () => {
           </Switch>
         </div>
       </BrowserRouter>
-    </div>
+    </>
   )
 }
 
